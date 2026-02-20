@@ -1,0 +1,38 @@
+<h2>Students List</h2>
+
+<form [formGroup]="studentForm" (ngSubmit)="addStudent()">
+
+  <input
+    type="text"
+    formControlName="name"
+    placeholder="Enter student name"
+  />
+
+  <!-- Validation -->
+  <div *ngIf="name?.invalid && name?.touched" style="color:red">
+    <div *ngIf="name?.errors?.['required']">Name is required</div>
+    <div *ngIf="name?.errors?.['minlength']">
+      Minimum 3 characters required
+    </div>
+  </div>
+
+  <br />
+
+  <button type="submit">
+    {{ editIndex !== null ? 'Update' : 'Add' }}
+  </button>
+
+  <button type="button" *ngIf="editIndex !== null" (click)="cancelEdit()">
+    Cancel
+  </button>
+</form>
+
+<hr />
+
+<ul>
+  <li *ngFor="let student of students; index as i">
+    {{ i + 1 }}. {{ student }}
+    <button (click)="startEdit(i)">EDIT</button>
+    <button (click)="deleteStudent(i)">DELETE</button>
+  </li>
+</ul>
